@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">JeuDeLaVie</string>
+    <string name="taille_grille">Entrez une la taille de la grille : </string>
+    <string name="frequence">Entrez une la frequence des cellules : </string>
+    <string name="debut">En Attente...</string>
+    <string name="jeudelavie">Le jeu de la vie</string>
+    <string name="arreter">Reset</string>
+    <string name="vitesse">Vitesse :</string>
+</resources>
