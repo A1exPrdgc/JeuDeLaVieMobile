@@ -27,8 +27,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/resultatScore"
         android:layout_below="@id/titre"
-        android:layout_alignStart="@id/editFrequence"
-        android:textSize="20sp"
+        android:layout_toRightOf="@id/score"
+        android:textStyle="bold"
         android:paddingTop="15dp"
         android:paddingStart="15dp"/>
 

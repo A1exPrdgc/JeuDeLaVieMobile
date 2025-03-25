@@ -22,6 +22,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.net.URL;
+import java.util.HashSet;
 
 public class GrilleJeuDeLaVie extends AppCompatActivity {
 
@@ -58,6 +59,7 @@ public class GrilleJeuDeLaVie extends AppCompatActivity {
 
         this.valTaille = intent.getIntExtra("valTaille", 0);
         this.valFrequ = intent.getFloatExtra("valFrequence", 0);
+        this.score = intent.getIntExtra("oldscore", 0);
 
         this.bar.setProgress(10);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -143,6 +145,9 @@ public class GrilleJeuDeLaVie extends AppCompatActivity {
 
 
     public void changerGrille(View view) {
+
+        HashSet<String> etatsPrecedents = new HashSet<>();
+
         backgroundHandler.post(new Runnable() {
             int nbIterations = 0;
 
@@ -192,15 +197,34 @@ public class GrilleJeuDeLaVie extends AppCompatActivity {
                     System.arraycopy(tabFuture[i], 0, GrilleJeuDeLaVie.this.matriceCelluleFinal[i], 0, size);
                 }
 
-                if(GrilleJeuDeLaVie.isTabEqual(GrilleJeuDeLaVie.this.matriceCelluleFinal, tabTemp) || nbIterations >= 1000)
+                String grilleString = convertGrilleToString(GrilleJeuDeLaVie.this.matriceCelluleFinal);
+
+                if(GrilleJeuDeLaVie.isTabEqual(GrilleJeuDeLaVie.this.matriceCelluleFinal, tabTemp))
                 {
-                    mainHandler.post(() -> finIterations(nbIterations));
+                    mainHandler.post(() -> finIterations(nbIterations, "Grille bloqué"));
                     return;
                 }
                 else
                 {
-                    mainHandler.post(() -> updateInfo(nbIterations));
+                    if(nbIterations >= 1000)
+                    {
+                        mainHandler.post(() -> finIterations(nbIterations, "1000 itérations atteint"));
+                        return;
+                    }
+                    else
+                    {
+                        if (etatsPrecedents.contains(grilleString))
+                        {
+                            mainHandler.post(() -> finIterations(nbIterations, "périodicité détecté"));
+                            return;
+                        }
+                        else
+                        {
+                            mainHandler.post(() -> updateInfo(nbIterations));
+                        }
+                    }
                 }
+                etatsPrecedents.add(grilleString);
 
 
                 mainHandler.post(() -> actualiserGrille(view));
@@ -212,17 +236,33 @@ public class GrilleJeuDeLaVie extends AppCompatActivity {
         });
     }
 
+    private static String convertGrilleToString(int[][] grille) {
+        StringBuilder sb = new StringBuilder();
+        for (int[] ligne : grille) {
+            for (int cell : ligne) {
+                sb.append(cell);
+            }
+        }
+        return sb.toString();
+    }
+
     public void updateInfo(int iteration)
     {
-        this.score = iteration;
+        if(this.score < iteration)
+        {
+            this.score = iteration;
+        }
         this.info.setText(Integer.toString(iteration));
     }
 
-    public void finIterations(int iteration)
+    public void finIterations(int iteration, String message)
     {
-        this.score = iteration;
+        if(this.score < iteration)
+        {
+            this.score = iteration;
+        }
         this.info.setTextColor(Color.GREEN);
-        this.info.setText("Itérations terminés");
+        this.info.setText("Itérations terminés : " + message);
         this.button.setText("Relancer");
     }
 
