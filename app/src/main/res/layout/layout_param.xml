@@ -11,6 +11,28 @@
         android:gravity="center"
         android:padding="30dp"
         android:id="@+id/titre"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/score"
+        android:id="@+id/score"
+        android:paddingTop="15dp"
+        android:paddingStart="15dp"
+        android:layout_below="@id/titre"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/resultatScore"
+        android:layout_below="@id/titre"
+        android:layout_alignStart="@id/editFrequence"
+        android:textSize="20sp"
+        android:paddingTop="15dp"
+        android:paddingStart="15dp"/>
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +40,7 @@
         android:paddingStart="15dp"
         android:text="@string/taille_grille"
         android:id="@+id/text1"
-        android:layout_below="@id/titre"
+        android:layout_below="@id/score"
         />
     <EditText
         android:layout_width="wrap_content"
@@ -26,8 +48,7 @@
         android:layout_toRightOf="@id/text1"
         android:id="@+id/editTaille"
         android:layout_alignStart="@id/editFrequence"
-        android:layout_below="@id/titre"
-        />
+        android:layout_below="@id/score"/>
 
     <TextView
         android:layout_width="wrap_content"

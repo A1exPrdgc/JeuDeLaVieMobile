@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.widget.RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".GrilleJeuDeLaVie"
     android:layout_width="match_parent"
@@ -11,17 +11,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/informations"
-        android:layout_marginTop="30dp"
-        android:paddingLeft="15dp"
+        android:layout_marginTop="70dp"
         android:textSize="20sp"
-        android:text="@string/debut"/>
+        android:text="@string/debut"
+        android:layout_alignStart="@+id/layoutgrille"/>
 
     <GridLayout
         android:id="@+id/layoutgrille"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"/>
+        android:layout_centerInParent="true"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/informations"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -30,19 +31,35 @@
         android:textSize="20sp"
         android:layout_marginTop="10dp"
         android:paddingLeft="15dp"
-        android:layout_gravity="left"/>
+        android:layout_gravity="left"
+        android:layout_below="@+id/layoutgrille"
+        android:id="@+id/textVitesse"/>
 
     <SeekBar
         android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp"/>
+        android:padding="15dp"
+        android:layout_below="@+id/textVitesse"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/arreter"
-        android:layout_gravity="center"
         android:onClick="demarrerJeu"
-        android:id="@+id/resetButton"/>
-</android.widget.LinearLayout>
+        android:id="@+id/resetButton"
+        android:layout_below="@+id/bar"
+        android:layout_marginLeft="10dp"
+        android:padding="15dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Retour"
+        android:id="@+id/returnButton"
+        android:layout_toRightOf="@+id/resetButton"
+        android:onClick="retourMenu"
+        android:layout_below="@+id/bar"
+        android:layout_marginLeft="10dp"
+        android:padding="15dp"/>
+</android.widget.RelativeLayout>

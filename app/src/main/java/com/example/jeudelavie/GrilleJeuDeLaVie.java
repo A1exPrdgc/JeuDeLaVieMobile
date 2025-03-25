@@ -34,6 +34,7 @@ public class GrilleJeuDeLaVie extends AppCompatActivity {
     private int valTaille;
     private float valFrequ;
     private int vitesse;
+    private int score;
 
 
     private HandlerThread handlerThread;
@@ -193,7 +194,7 @@ public class GrilleJeuDeLaVie extends AppCompatActivity {
 
                 if(GrilleJeuDeLaVie.isTabEqual(GrilleJeuDeLaVie.this.matriceCelluleFinal, tabTemp) || nbIterations >= 1000)
                 {
-                    mainHandler.post(() -> finIterations());
+                    mainHandler.post(() -> finIterations(nbIterations));
                     return;
                 }
                 else
@@ -213,14 +214,24 @@ public class GrilleJeuDeLaVie extends AppCompatActivity {
 
     public void updateInfo(int iteration)
     {
+        this.score = iteration;
         this.info.setText(Integer.toString(iteration));
     }
 
-    public void finIterations()
+    public void finIterations(int iteration)
     {
+        this.score = iteration;
         this.info.setTextColor(Color.GREEN);
         this.info.setText("Itérations terminés");
         this.button.setText("Relancer");
+    }
+
+    public void retourMenu(View view)
+    {
+        this.handlerThread.quitSafely();
+        Intent intent = new Intent(this, com.example.jeudelavie.MainActivity.class);
+        intent.putExtra("score", this.score);
+        startActivity(intent);
     }
 
     public void demarrerJeu(View view)
@@ -308,8 +319,10 @@ public class GrilleJeuDeLaVie extends AppCompatActivity {
     }
 
     public static void shuffleArray(int[][] array) {
-        for (int i = 1; i < array.length - 1; i++) {
-            for (int j = 1; j < array.length - 1; j++) {
+        for (int i = 1; i < array.length - 1; i++)
+        {
+            for (int j = 1; j < array.length - 1; j++)
+            {
                 int randI = 1 + (int)(Math.random() * ((array.length - 1) - 1));
                 int randJ = 1 + (int)(Math.random() * ((array.length - 1) - 1));
 
@@ -317,18 +330,6 @@ public class GrilleJeuDeLaVie extends AppCompatActivity {
                 array[i][j] = array[randI][randJ];
                 array[randI][randJ] = temp;
             }
-        }
-    }
-
-    public static void afficherTab(int[][] tab)
-    {
-        for (int i = 0; i < tab.length; i++)
-        {
-            for (int j = 0; j < tab.length; j++)
-            {
-                System.out.print(tab[i][j] + " ");
-            }
-            System.out.println();
         }
     }
 }

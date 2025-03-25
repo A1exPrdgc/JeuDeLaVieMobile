@@ -1,25 +1,37 @@
 package com.example.jeudelavie;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Looper;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.GridLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    private int score;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_param);
+
+        TextView viewScore = findViewById(R.id.resultatScore);
+
+        Intent partieIntent = getIntent();
+        if(partieIntent != null)
+        {
+            int newScore = partieIntent.getIntExtra("score", 0);
+            System.out.println(newScore);
+
+            if(newScore > this.score)
+            {
+                this.score = newScore;
+            }
+        }
+        viewScore.setText(Integer.toString(this.score));
+
     }
 
     public void buttonActivated(View view)
